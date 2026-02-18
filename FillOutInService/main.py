@@ -1,5 +1,4 @@
-import re
-
+import sys
 import fitz  # PyMuPDF library
 import os
 import random
@@ -20,8 +19,10 @@ in_service_template_directory = os.getcwd() + "\\In_Service_Template\\"
 
 
 
-filling_date = input("Please input date: ")
-Aide_Name = input("Please input Aide's name: ")
+#filling_date = input("Please input date: ")
+#Aide_Name = input("Please input Aide's name: ")
+filling_date = (sys.argv[1]).strip()
+Aide_Name = (sys.argv[2]).strip()
 aide_language = ""
 temp_year = filling_date.split("/")
 filling_year = temp_year[-1]
@@ -33,7 +34,8 @@ def aide_language_judge():
     global in_service_directory
     global aide_language
 
-    aide_language = input("Please input aide's language (Chinese/English): ")
+    #aide_language = input("Please input aide's language (Chinese/English): ")
+    aide_language = (sys.argv[3]).strip()
 
     if aide_language == "Chinese":
 
@@ -46,7 +48,8 @@ def aide_language_judge():
     else:
 
         print("Language is wrong, please input language again!")
-        aide_language_judge()
+        #aide_language_judge()
+        quit()
 
 
 
@@ -450,4 +453,5 @@ fill_out_patient()
 fill_out_stop_sex()
 fill_out_toberculosis()
 fill_out_unicersal()
+print(Aide_Name, "  ", filling_date)
 
