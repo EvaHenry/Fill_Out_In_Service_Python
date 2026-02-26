@@ -22,11 +22,19 @@ in_service_template_directory = os.getcwd() + "\\In_Service_Template\\"
 #filling_date = input("Please input date: ")
 #Aide_Name = input("Please input Aide's name: ")
 filling_date = (sys.argv[1]).strip()
-Aide_Name = (sys.argv[2]).strip()
+#Aide_Name = (sys.argv[2]).strip()
+Aide_Name_list = sys.argv[2:]
+#print(Aide_Name_list)
+Aide_Name_remove = Aide_Name_list.pop()
+#print(Aide_Name_remove)
+Aide_Name = " ".join(Aide_Name_list)
 aide_language = ""
 temp_year = filling_date.split("/")
 filling_year = temp_year[-1]
 in_service_directory = ""
+patient_folder_path = ""
+
+
 
 
 def aide_language_judge():
@@ -35,7 +43,7 @@ def aide_language_judge():
     global aide_language
 
     #aide_language = input("Please input aide's language (Chinese/English): ")
-    aide_language = (sys.argv[3]).strip()
+    aide_language = (sys.argv[-1]).strip()
 
     if aide_language == "Chinese":
 
@@ -60,10 +68,14 @@ def aide_language_judge():
 
 def create_patient_folder():
 
-    patient_folder_path = os.getcwd() + "\\Outcome\\" + Aide_Name
+    global patient_folder_path
+
+    patient_folder_path = os.getcwd() + "\\Outcome\\" + "in_service_" + Aide_Name + "_" + filling_year
     os.makedirs(patient_folder_path, exist_ok = True)
 
 def fill_out_advanced():
+
+    global patient_folder_path
 
     advanced_directive_file = in_service_directory + "\\Advanced Directive.pdf"
 
@@ -86,7 +98,8 @@ def fill_out_advanced():
 
 
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Advanced Directive.pdf"
+    #outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Advanced Directive.pdf"
+    outcome_directory = patient_folder_path + "\\Advanced Directive.pdf"
     doc.save(outcome_directory)
     doc.close()
 
@@ -95,6 +108,7 @@ def fill_out_advanced():
 
 
 def fill_out_caregiver():
+    global patient_folder_path
 
     caregiver_file = in_service_directory + "\\Caregiver's Matters To Be Aware of.pdf"
 
@@ -117,7 +131,8 @@ def fill_out_caregiver():
 
 
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Caregiver's Matters To Be Aware of.pdf"
+    #outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Caregiver's Matters To Be Aware of.pdf"
+    outcome_directory = patient_folder_path + "\\Caregiver's Matters To Be Aware of.pdf"
     doc.save(outcome_directory)
     doc.close()
 
@@ -126,6 +141,8 @@ def fill_out_caregiver():
 
 
 def fill_out_covid():
+
+    global patient_folder_path
 
     covid_file = in_service_directory + "\\COVID-19.pdf"
 
@@ -150,7 +167,7 @@ def fill_out_covid():
 
 
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\COVID-19.pdf"
+    outcome_directory = patient_folder_path + "\\COVID-19.pdf"
     doc.save(outcome_directory)
     doc.close()
 
@@ -160,6 +177,8 @@ def fill_out_covid():
 
 
 def fill_out_electronic_visit():
+
+    global patient_folder_path
 
     electronic_file = in_service_directory + "\\Electronic Visit Verification.pdf"
 
@@ -179,7 +198,7 @@ def fill_out_electronic_visit():
         page_1.insert_text((220, 350), filling_date, fontsize=16)
         page_1.insert_text((355, 271), filling_year, fontname="hebo", fontsize=14)
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Electronic Visit Verification.pdf"
+    outcome_directory = patient_folder_path + "\\Electronic Visit Verification.pdf"
     doc.save(outcome_directory)
     doc.close()
 
@@ -188,6 +207,8 @@ def fill_out_electronic_visit():
 
 
 def fill_out_emergency():
+
+    global patient_folder_path
 
     emergency_file = in_service_directory + "\\Emergency Response.pdf"
 
@@ -207,7 +228,7 @@ def fill_out_emergency():
         page_1.insert_text((220, 350), filling_date, fontsize=16)
         page_1.insert_text((308, 270), filling_year, fontname="hebo", fontsize=14)
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Emergency Response.pdf"
+    outcome_directory = patient_folder_path + "\\Emergency Response.pdf"
     doc.save(outcome_directory)
     doc.close()
 
@@ -215,6 +236,8 @@ def fill_out_emergency():
 
 
 def fill_out_handwash():
+
+    global patient_folder_path
 
     handwash_file = in_service_directory + "\\Handwash Teching info from CDC.pdf"
 
@@ -234,7 +257,7 @@ def fill_out_handwash():
         page_1.insert_text((450, 273), filling_year, fontname="hebo", fontsize=14)
         page_1.insert_text((230, 325), filling_date, fontsize=16)
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Handwash Teching info from CDC.pdf"
+    outcome_directory = patient_folder_path + "\\Handwash Teching info from CDC.pdf"
     doc.save(outcome_directory)
     doc.close()
 
@@ -243,6 +266,8 @@ def fill_out_handwash():
 
 
 def fill_out_hipaa():
+
+    global patient_folder_path
 
     hipaa_file = in_service_directory + "\\HIPAA.pdf"
 
@@ -262,13 +287,15 @@ def fill_out_hipaa():
         page_1.insert_text((230, 277), filling_year, fontname="hebo", fontsize=14)
         page_1.insert_text((230, 320), filling_date, fontsize=16)
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\HIPAA.pdf"
+    outcome_directory = patient_folder_path + "\\HIPAA.pdf"
     doc.save(outcome_directory)
     doc.close()
 
 
 
 def fill_out_hiv():
+
+    global patient_folder_path
 
     hiv_file = in_service_directory + "\\HIV Confidentriality.pdf"
 
@@ -288,7 +315,7 @@ def fill_out_hiv():
         page_1.insert_text((295, 278), filling_year, fontname="hebo", fontsize=14)
         page_1.insert_text((230, 320), filling_date, fontsize=16)
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\HIV Confidentriality.pdf"
+    outcome_directory = patient_folder_path + "\\HIV Confidentriality.pdf"
     doc.save(outcome_directory)
     doc.close()
 
@@ -298,6 +325,8 @@ def fill_out_hiv():
 
 
 def fill_out_osha():
+
+    global patient_folder_path
 
     osha_file = in_service_directory + "\\OSHA.pdf"
 
@@ -318,7 +347,7 @@ def fill_out_osha():
         page_1.insert_text((207, 276), filling_year, fontname="hebo", fontsize=14)
         page_1.insert_text((230, 320), filling_date, fontsize=16)
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\OSHA.pdf"
+    outcome_directory = patient_folder_path + "\\OSHA.pdf"
     doc.save(outcome_directory)
     doc.close()
 
@@ -326,6 +355,8 @@ def fill_out_osha():
 
 
 def fill_out_patient():
+
+    global patient_folder_path
 
     patient_file = in_service_directory + "\\Patient Rights.pdf"
 
@@ -345,7 +376,7 @@ def fill_out_patient():
         page_1.insert_text((250, 273), filling_year, fontname="hebo", fontsize=14)
         page_1.insert_text((230, 350), filling_date, fontsize=16)
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Patient Rights.pdf"
+    outcome_directory = patient_folder_path + "\\Patient Rights.pdf"
     doc.save(outcome_directory)
     doc.close()
 
@@ -353,6 +384,8 @@ def fill_out_patient():
 
 
 def fill_out_stop_sex():
+
+    global patient_folder_path
 
     stop_sex_file = in_service_directory + "\\Stop Sexual Harassment.pdf"
 
@@ -372,7 +405,7 @@ def fill_out_stop_sex():
         page_1.insert_text((328, 272), filling_year, fontname="hebo", fontsize=14)
         page_1.insert_text((230, 320), filling_date, fontsize=16)
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Stop Sexual Harassment.pdf"
+    outcome_directory = patient_folder_path + "\\Stop Sexual Harassment.pdf"
     doc.save(outcome_directory)
     doc.close()
 
@@ -380,6 +413,8 @@ def fill_out_stop_sex():
 
 
 def fill_out_toberculosis():
+
+    global patient_folder_path
 
     toberculosis_file = in_service_directory + "\\Toberculosis Risk Assessment.pdf"
 
@@ -399,7 +434,7 @@ def fill_out_toberculosis():
         page_1.insert_text((390, 273), filling_year, fontname="hebo", fontsize=14)
         page_1.insert_text((220, 320), filling_date, fontsize=16)
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Toberculosis Risk Assessment.pdf"
+    outcome_directory = patient_folder_path + "\\Toberculosis Risk Assessment.pdf"
     doc.save(outcome_directory)
     doc.close()
 
@@ -409,6 +444,8 @@ def fill_out_toberculosis():
 
 
 def fill_out_unicersal():
+
+    global patient_folder_path
 
     unicersal_file = in_service_directory + "\\Unicersal precaution.pdf"
 
@@ -428,7 +465,8 @@ def fill_out_unicersal():
         page_1.insert_text((310, 272), filling_year, fontname="hebo", fontsize=14)
         page_1.insert_text((235, 320), filling_date, fontsize=16)
 
-    outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Unicersal precaution.pdf"
+    #outcome_directory = os.getcwd() + "\\Outcome\\" + Aide_Name + "\\Unicersal precaution.pdf"
+    outcome_directory = patient_folder_path + "\\Unicersal precaution.pdf"
     doc.save(outcome_directory)
     doc.close()
 
